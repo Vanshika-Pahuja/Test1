@@ -56,3 +56,31 @@ pipeline:
                       - name: artifact
                         type: String
                         value: artifact
+    - stage:
+        name: artifactory_push
+        identifier: artifactory_push
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+            override: true
+          buildIntelligence:
+            enabled: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: ArtifactoryUpload
+                  name: ArtifactoryUpload_1
+                  identifier: ArtifactoryUpload_1
+                  spec:
+                    connectorRef: artifactoryconnector
+                    target: angular-npm-npm/
+                    sourcePath: <+pipeline.stages.Build.spec.execution.steps.Created_Build.output.outputVariables.artifact>
