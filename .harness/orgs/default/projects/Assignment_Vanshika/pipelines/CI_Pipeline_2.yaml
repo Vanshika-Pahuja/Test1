@@ -34,4 +34,4 @@ pipeline:
                     tags:
                       - <+pipeline.sequenceId>
                     dockerfile: Dockerfile
-                    context: test1
+                    context: Test1
