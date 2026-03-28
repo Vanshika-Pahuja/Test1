@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_Test1_1774680995820-pr-trigger-input-set
+  identifier: Build_Test1_1774680995820prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: Assignment_Vanshika
+  pipeline:
+    identifier: Build_Test1_1774680995820
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
