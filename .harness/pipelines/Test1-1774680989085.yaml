@@ -1,0 +1,33 @@
+pipeline:
+  name: Build Test1
+  identifier: Build_Test1_1774680995820
+  projectIdentifier: Assignment_Vanshika
+  orgIdentifier: default
+  stages:
+    - stage:
+        name: Build
+        identifier: Build
+        type: CI
+        spec:
+          cloneCodebase: true
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Echo Welcome Message
+                  identifier: Echo_Welcome_Message
+                  spec:
+                    shell: Sh
+                    command: echo "Welcome to Harness CI"
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: vanshikapahuja
+        repoName: Test1
+        build: <+input>
