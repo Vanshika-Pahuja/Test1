@@ -3,19 +3,19 @@ pipeline:
   identifier: CI_Pipeline_2
   projectIdentifier: Assignment_Vanshika
   orgIdentifier: default
-  properties:
-    ci:
-      codebase:
-        connectorRef: vanshikapahuja
-        repoName: Test1
-        build: <+input>
   stages:
     - stage:
-        name: Build_and_Push
-        identifier: Build_and_Push
+        name: build and push image
+        identifier: build_and_push_image
+        description: ""
         type: CI
         spec:
           cloneCodebase: true
+          caching:
+            enabled: true
+            override: true
+          buildIntelligence:
+            enabled: true
           platform:
             os: Linux
             arch: Amd64
@@ -26,12 +26,16 @@ pipeline:
             steps:
               - step:
                   type: BuildAndPushDockerRegistry
-                  name: Build_And_Push_Image
-                  identifier: Build_And_Push_Image
+                  name: BuildAndPushDockerRegistry_1
+                  identifier: BuildAndPushDockerRegistry_1
                   spec:
                     connectorRef: jfrog_docker_connector
-                    repo: trial3wrx99.jfrog.io/docker1-docker-local/my-angular-app
+                    repo: myrepo/myimage
                     tags:
                       - <+pipeline.sequenceId>
-                    dockerfile: Dockerfile
-                    context: Test1
+  properties:
+    ci:
+      codebase:
+        connectorRef: vanshikapahuja
+        repoName: Test1
+        build: <+input>
