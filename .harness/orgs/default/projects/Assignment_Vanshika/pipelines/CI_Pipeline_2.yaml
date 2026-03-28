@@ -29,10 +29,14 @@ pipeline:
                   name: BuildAndPushDockerRegistry_1
                   identifier: BuildAndPushDockerRegistry_1
                   spec:
-                    connectorRef: new_connector
+                    connectorRef: connector_2
                     repo: trial3wrx99-docker-local/myrepo
                     tags:
                       - <+pipeline.sequenceId>
+                      - latest
+                    dockerfile: Dockerfile
+                    context: .
+                    optimize: true
   properties:
     ci:
       codebase:
