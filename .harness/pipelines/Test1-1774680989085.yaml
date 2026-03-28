@@ -25,6 +25,34 @@ pipeline:
           runtime:
             type: Cloud
             spec: {}
+    - stage:
+        name: push artifacts
+        identifier: push_artifacts
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+            override: true
+          buildIntelligence:
+            enabled: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: ArtifactoryUpload
+                  name: ArtifactoryUpload_1
+                  identifier: ArtifactoryUpload_1
+                  spec:
+                    connectorRef: artifactoryconnector
+                    target: local-docker-local/
+                    sourcePath: package.json
   properties:
     ci:
       codebase:
