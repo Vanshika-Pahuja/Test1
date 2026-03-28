@@ -30,7 +30,7 @@ pipeline:
                   identifier: BuildAndPushDockerRegistry_1
                   spec:
                     connectorRef: connector_2
-                    repo: trial3wrx99-docker-local/myrepo
+                    repo: myrepo
                     tags:
                       - <+pipeline.sequenceId>
                       - latest
