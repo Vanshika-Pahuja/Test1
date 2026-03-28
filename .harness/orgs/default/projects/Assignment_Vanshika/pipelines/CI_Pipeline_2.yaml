@@ -30,7 +30,7 @@ pipeline:
                   identifier: BuildAndPushDockerRegistry_1
                   spec:
                     connectorRef: new_connector
-                    repo: myrepo
+                    repo: https://trial3wrx99.jfrog.io/artifactory/myrepo/
                     tags:
                       - <+pipeline.sequenceId>
   properties:
