@@ -29,7 +29,7 @@ pipeline:
                   name: BuildAndPushDockerRegistry_1
                   identifier: BuildAndPushDockerRegistry_1
                   spec:
-                    connectorRef: jfrog_docker_connector
+                    connectorRef: new_connector
                     repo: myrepo/myimage
                     tags:
                       - <+pipeline.sequenceId>
