@@ -23,12 +23,12 @@ service:
               enableDeclarativeRollback: false
       artifacts:
         primary:
-          primaryArtifactRef: <+input>
+          primaryArtifactRef: Test_artifact
           sources:
             - spec:
                 connectorRef: connector_2
                 imagePath: trial3wrx99-docker-local/harness-node-demo
-                tag: <+input>.selectOneFrom(latest)
+                tag: latest
                 digest: ""
               identifier: Test_artifact
               type: DockerRegistry
