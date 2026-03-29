@@ -44,22 +44,6 @@ pipeline:
           # -------------------------------------------------------------------
           service:
             serviceRef: harness_node_demo_svc
-            serviceInputs:
-              serviceDefinition:
-                type: Kubernetes
-                spec:
-                  artifacts:
-                    primary:
-                      primaryArtifactRef: <+input>
-                      sources:
-                        - identifier: artifactory_docker
-                          type: ArtifactoryRegistry
-                          spec:
-                            connectorRef: connector_2
-                            repository: trial3wrx99-docker-local
-                            artifactPath: harness-node-demo
-                            repositoryFormat: docker
-                            tag: <+input>
 
           # -------------------------------------------------------------------
           # Environment
