@@ -3,3 +3,33 @@ service:
   identifier: Test_harness_deploy
   orgIdentifier: default
   projectIdentifier: Assignment_Vanshika
+  serviceDefinition:
+    spec:
+      manifests:
+        - manifest:
+            identifier: Test_manifest
+            type: K8sManifest
+            spec:
+              store:
+                type: Github
+                spec:
+                  connectorRef: vanshikapahuja
+                  gitFetchType: Branch
+                  paths:
+                    - .harness/pipelines/cd-deploy-pipeline.yaml
+                  repoName: https://github.com/Vanshika-Pahuja/Test1
+                  branch: main
+              skipResourceVersioning: false
+              enableDeclarativeRollback: false
+      artifacts:
+        primary:
+          primaryArtifactRef: <+input>
+          sources:
+            - spec:
+                connectorRef: connector_2
+                imagePath: trial3wrx99-docker-local/myrepo
+                tag: <+input>.selectOneFrom(latest)
+                digest: ""
+              identifier: Test_artifact
+              type: DockerRegistry
+    type: Kubernetes
