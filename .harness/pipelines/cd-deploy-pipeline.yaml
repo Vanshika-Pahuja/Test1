@@ -42,7 +42,9 @@ pipeline:
                         type: HarnessApproval
                         timeout: 1d
                         spec:
-                          approvalMessage: Canary pod(s) are live. Verify pod health, logs and metrics. Approve to proceed with full rollout.
+                          approvalMessage: |-
+                            Canary pod(s) are live. Verify pod health, logs and
+                            metrics. Approve to proceed with full rollout.
                           includePipelineExecutionHistory: true
                           approvers:
                             minimumCount: 1
