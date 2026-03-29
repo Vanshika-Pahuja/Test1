@@ -27,7 +27,7 @@ service:
           sources:
             - spec:
                 connectorRef: connector_2
-                imagePath: trial3wrx99-docker-local/harness-node-demo
+                imagePath: trial3wrx99-docker-local/myrepo
                 tag: latest
                 digest: ""
               identifier: Test_artifact

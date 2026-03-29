@@ -57,7 +57,7 @@ pipeline:
                   identifier: BuildAndPushArtifactory
                   spec:
                     connectorRef: connector_2
-                    repo: trial3wrx99.jfrog.io/trial3wrx99-docker-local/harness-node-demo
+                    repo: trial3wrx99.jfrog.io/trial3wrx99-docker-local/myrepo
                     tags:
                       - <+pipeline.sequenceId>
                       - latest
