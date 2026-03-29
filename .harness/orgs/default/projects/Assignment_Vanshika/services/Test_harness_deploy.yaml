@@ -16,8 +16,8 @@ service:
                   connectorRef: vanshikapahuja
                   gitFetchType: Branch
                   paths:
-                    - .harness/pipelines/cd-deploy-pipeline.yaml
-                  repoName: https://github.com/Vanshika-Pahuja/Test1
+                    - k8s
+                  repoName: Test1
                   branch: main
               skipResourceVersioning: false
               enableDeclarativeRollback: false
