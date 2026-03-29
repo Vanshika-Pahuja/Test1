@@ -14,25 +14,11 @@ pipeline:
           deploymentType: Kubernetes
           service:
             serviceRef: Test_harness_deploy
-            serviceInputs:
-              serviceDefinition:
-                type: Kubernetes
-                spec:
-                  artifacts:
-                    primary:
-                      primaryArtifactRef: <+input>
-                      sources: <+input>
           environment:
             environmentRef: dev
             deployToAll: false
-            infrastructureDefinition:
-              identifier: dev_k8s_infra
-              inputs:
-                identifier: dev_k8s_infra
-                type: KubernetesDirect
-                spec:
-                  connectorRef: <+input>
-                  namespace: <+input>
+            infrastructureDefinitions:
+              - identifier: dev_k8s_infra
           execution:
             steps:
               - stepGroup:
