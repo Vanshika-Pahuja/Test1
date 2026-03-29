@@ -1,0 +1,5 @@
+service:
+  name: harness-node-demo-svc
+  identifier: harnessnodedemosvc
+  orgIdentifier: default
+  projectIdentifier: default_project
