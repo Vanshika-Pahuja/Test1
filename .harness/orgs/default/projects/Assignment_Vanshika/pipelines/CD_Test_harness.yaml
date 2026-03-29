@@ -1,0 +1,42 @@
+pipeline:
+  name: CD_Test_harness
+  identifier: CD_Test_harness
+  projectIdentifier: Assignment_Vanshika
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: vanshikapahuja
+        repoName: Test1
+        build: <+input>
+  stages:
+    - stage:
+        name: Build
+        identifier: Build
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+            override: true
+          buildIntelligence:
+            enabled: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: BuildAndPushDockerRegistry
+                  name: BuildAndPushDockerRegistry_1
+                  identifier: BuildAndPushDockerRegistry_1
+                  spec:
+                    connectorRef: connector_2
+                    repo: trial3wrx99.jfrog.io/trial3wrx99-docker-local/myrepo
+                    tags:
+                      - latest
