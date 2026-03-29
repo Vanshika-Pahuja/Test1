@@ -1,74 +1,30 @@
-# =============================================================================
-# Harness CD Pipeline — cd-deploy-pipeline
-# =============================================================================
-# Canary deployment strategy with native Rollout Deployment steps.
-# No custom scripts or third-party rollout tools.
-#
-# BEFORE RUNNING — create these in Harness UI:
-#
-#   1. Service (CD → Services → New Service):
-#        Name: harness-node-demo-svc
-#        Identifier: harness_node_demo_svc
-#        Deployment type: Kubernetes
-#        Artifact source: Artifactory Docker → connectorRef: artifactoryconnector
-#        Manifests: Git → connectorRef: vanshikapahuja, repo: Test1, path: k8s/
-#
-#   2. Environment (CD → Environments → New Environment):
-#        Name: dev | Identifier: dev | Type: PreProduction
-#
-#   3. Infrastructure Definition (inside the "dev" environment):
-#        Name: dev-k8s-infra | Identifier: dev_k8s_infra
-#        Type: Kubernetes Direct
-#        Connector: YOUR_K8S_CONNECTOR_ID  ← replace with your K8s connector
-#        Namespace: harness-node-demo
-# =============================================================================
-
 pipeline:
   name: cd-deploy-pipeline
   identifier: cd_deploy_pipeline
   projectIdentifier: Assignment_Vanshika
   orgIdentifier: default
   tags: {}
-
   stages:
     - stage:
         name: Deploy to Dev
         identifier: DeployToDev
-        description: "Canary deployment to the dev environment"
+        description: Canary deployment to the dev environment
         type: Deployment
         spec:
           deploymentType: Kubernetes
-
-          # -------------------------------------------------------------------
-          # Service
-          # -------------------------------------------------------------------
           service:
             serviceRef: harness_node_demo_svc
-
-          # -------------------------------------------------------------------
-          # Environment
-          # -------------------------------------------------------------------
           environment:
             environmentRef: dev
             deployToAll: false
             infrastructureDefinitions:
               - identifier: dev_k8s_infra
-
-          # -------------------------------------------------------------------
-          # Execution — Canary Strategy
-          # -------------------------------------------------------------------
           execution:
             steps:
-
-              # ===============================================================
-              # CANARY PHASE
-              # ===============================================================
               - stepGroup:
                   name: Canary Deployment
                   identifier: canaryDeployment
                   steps:
-
-                    # Step 1 — Native Rollout Deployment (Canary)
                     - step:
                         name: Rollout Deployment
                         identifier: canaryRolloutDeployment
@@ -80,17 +36,13 @@ pipeline:
                             spec:
                               count: 1
                           skipDryRun: false
-
-                    # Step 2 — Approval gate (verify canary health)
                     - step:
                         name: Canary Approval
                         identifier: CanaryApproval
                         type: HarnessApproval
                         timeout: 1d
                         spec:
-                          approvalMessage: |-
-                            Canary pod(s) are live. Verify pod health, logs and
-                            metrics. Approve to proceed with full rollout.
+                          approvalMessage: Canary pod(s) are live. Verify pod health, logs and metrics. Approve to proceed with full rollout.
                           includePipelineExecutionHistory: true
                           approvers:
                             minimumCount: 1
@@ -98,8 +50,6 @@ pipeline:
                             userGroups:
                               - _project_all_users
                           approverInputs: []
-
-                    # Step 3 — Canary Delete (clean up canary before primary)
                     - step:
                         name: Canary Delete
                         identifier: canaryDelete
@@ -107,16 +57,10 @@ pipeline:
                         timeout: 10m
                         spec:
                           skipDryRun: false
-
-              # ===============================================================
-              # PRIMARY PHASE
-              # ===============================================================
               - stepGroup:
                   name: Primary Deployment
                   identifier: primaryDeployment
                   steps:
-
-                    # Step 1 — Native Rollout Deployment (Primary)
                     - step:
                         name: Rollout Deployment
                         identifier: primaryRolloutDeployment
@@ -124,10 +68,6 @@ pipeline:
                         timeout: 10m
                         spec:
                           skipDryRun: false
-
-            # -----------------------------------------------------------------
-            # Rollback — automatic on failure
-            # -----------------------------------------------------------------
             rollbackSteps:
               - step:
                   name: Rollback Rollout Deployment
@@ -135,7 +75,6 @@ pipeline:
                   type: K8sRollingRollback
                   timeout: 10m
                   spec: {}
-
         tags: {}
         failureStrategies:
           - onFailure:
