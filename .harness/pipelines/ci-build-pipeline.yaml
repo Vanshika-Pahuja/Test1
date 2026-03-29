@@ -1,0 +1,74 @@
+# =============================================================================
+# Harness CI Pipeline — ci-build-pipeline
+# =============================================================================
+# Uses the native Build and Push step to build the Docker image and push
+# it to your Artifactory Docker registry. No shell scripts.
+#
+# BEFORE RUNNING:
+#   1. Ensure the "vanshikapahuja" Git connector is set up (already exists).
+#   2. Ensure the "artifactoryconnector" Artifactory connector is configured
+#      as a Docker Registry type (Project Settings → Connectors).
+#   3. Replace YOUR_ARTIFACTORY_DOCKER_REPO with your Artifactory Docker
+#      repository path (e.g., mycompany.jfrog.io/docker-local).
+# =============================================================================
+
+pipeline:
+  name: ci-build-pipeline
+  identifier: ci_build_pipeline
+  projectIdentifier: Assignment_Vanshika
+  orgIdentifier: default
+  tags: {}
+
+  properties:
+    ci:
+      codebase:
+        connectorRef: vanshikapahuja
+        repoName: Test1
+        build:
+          type: branch
+          spec:
+            branch: <+input>
+
+  stages:
+    - stage:
+        name: Build
+        identifier: Build
+        type: CI
+        spec:
+          cloneCodebase: true
+
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+
+          execution:
+            steps:
+              # ---------------------------------------------------------------
+              # Native Build and Push step (MANDATORY — no shell scripts)
+              # Builds the Docker image using ./Dockerfile and pushes to
+              # Artifactory Docker registry.
+              # ---------------------------------------------------------------
+              - step:
+                  type: BuildAndPushDockerRegistry
+                  name: Build and Push to Artifactory
+                  identifier: BuildAndPushArtifactory
+                  spec:
+                    connectorRef: connector_2
+                    repo: trial3wrx99.jfrog.io/trial3wrx99-docker-local/harness-node-demo
+                    tags:
+                      - <+pipeline.sequenceId>
+                      - latest
+                    dockerfile: ./Dockerfile
+                    context: .
+                    labels:
+                      build_number: <+pipeline.sequenceId>
+                      git_commit: <+codebase.commitSha>
+                      git_branch: <+codebase.branch>
+                    resources:
+                      limits:
+                        memory: 512Mi
+                        cpu: 400m
+                  timeout: 30m

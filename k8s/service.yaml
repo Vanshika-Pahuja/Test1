@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: harness-node-demo-svc
+  namespace: harness-node-demo
+  labels:
+    app: harness-node-demo
+spec:
+  selector:
+    app: harness-node-demo
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: ClusterIP
