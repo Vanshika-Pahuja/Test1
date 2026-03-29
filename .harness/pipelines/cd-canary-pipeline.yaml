@@ -1,0 +1,83 @@
+pipeline:
+  name: cd-canary-pipeline
+  identifier: cd_canary_pipeline
+  projectIdentifier: Assignment_Vanshika
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: Deploy to Dev
+        identifier: DeployToDev
+        type: Deployment
+        spec:
+          deploymentType: Kubernetes
+          service:
+            serviceRef: Test_harness_deploy
+          environment:
+            environmentRef: dev
+            deployToAll: false
+            infrastructureDefinitions:
+              - identifier: dev_k8s_infra
+          execution:
+            steps:
+              - stepGroup:
+                  name: Canary Deployment
+                  identifier: canaryDeployment
+                  steps:
+                    - step:
+                        name: Rollout Deployment
+                        identifier: canaryRolloutDeployment
+                        type: K8sCanaryDeploy
+                        timeout: 10m
+                        spec:
+                          instanceSelection:
+                            type: Count
+                            spec:
+                              count: 1
+                          skipDryRun: false
+                    - step:
+                        name: Canary Approval
+                        identifier: CanaryApproval
+                        type: HarnessApproval
+                        timeout: 1d
+                        spec:
+                          approvalMessage: Canary pod is live. Verify health and approve to proceed with full rollout.
+                          includePipelineExecutionHistory: true
+                          approvers:
+                            minimumCount: 1
+                            disallowPipelineExecutor: false
+                            userGroups:
+                              - _project_all_users
+                          approverInputs: []
+                    - step:
+                        name: Canary Delete
+                        identifier: canaryDelete
+                        type: K8sCanaryDelete
+                        timeout: 10m
+                        spec:
+                          skipDryRun: false
+              - stepGroup:
+                  name: Primary Deployment
+                  identifier: primaryDeployment
+                  steps:
+                    - step:
+                        name: Rollout Deployment
+                        identifier: primaryRolloutDeployment
+                        type: K8sRollingDeploy
+                        timeout: 10m
+                        spec:
+                          skipDryRun: false
+            rollbackSteps:
+              - step:
+                  name: Rollback Rollout Deployment
+                  identifier: rollbackRolloutDeployment
+                  type: K8sRollingRollback
+                  timeout: 10m
+                  spec: {}
+        tags: {}
+        failureStrategies:
+          - onFailure:
+              errors:
+                - AllErrors
+              action:
+                type: StageRollback
