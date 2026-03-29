@@ -1,0 +1,13 @@
+infrastructureDefinition:
+  name: dev_k8s_infra
+  identifier: dev_k8s_infra
+  orgIdentifier: default
+  projectIdentifier: Assignment_Vanshika
+  environmentRef: dev
+  deploymentType: Kubernetes
+  type: KubernetesDirect
+  spec:
+    connectorRef: k8s_delegate
+    namespace: harness-node-demo
+    releaseName: release-<+INFRA_KEY_SHORT_ID>
+  allowSimultaneousDeployments: false
