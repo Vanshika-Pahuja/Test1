@@ -3,7 +3,8 @@ pipeline:
   identifier: cd_canary_pipeline
   projectIdentifier: Assignment_Vanshika
   orgIdentifier: default
-  tags: {}
+  tags:
+    ai_generated: "true"
   stages:
     - stage:
         name: Deploy to Dev
@@ -18,6 +19,12 @@ pipeline:
             deployToAll: false
             infrastructureDefinitions:
               - identifier: dev_k8s_infra
+                inputs:
+                  identifier: dev_k8s_infra
+                  type: KubernetesDirect
+                  spec:
+                    connectorRef: <+input>
+                    namespace: <+input>
           execution:
             steps:
               - stepGroup:
