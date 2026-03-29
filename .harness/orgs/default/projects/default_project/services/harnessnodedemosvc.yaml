@@ -3,3 +3,32 @@ service:
   identifier: harnessnodedemosvc
   orgIdentifier: default
   projectIdentifier: default_project
+  serviceDefinition:
+    spec:
+      manifests:
+        - manifest:
+            identifier: Test_manifest_k8s
+            type: K8sManifest
+            spec:
+              store:
+                type: Github
+                spec:
+                  connectorRef: test_git_connector
+                  gitFetchType: Branch
+                  paths:
+                    - .harness/pipelines/cd-deploy-pipeline.yaml
+                  branch: main
+              skipResourceVersioning: false
+              enableDeclarativeRollback: false
+      artifacts:
+        primary:
+          primaryArtifactRef: <+input>
+          sources:
+            - spec:
+                connectorRef: Test_vanshika_artifact
+                imagePath: trial3wrx99-docker-local/myrepo
+                tag: latest
+                digest: ""
+              identifier: Test_artifact
+              type: DockerRegistry
+    type: Kubernetes
