@@ -17,8 +17,12 @@ pipeline:
           environment:
             environmentRef: dev
             deployToAll: false
-            infrastructureDefinitions:
-              - identifier: dev_k8s_infra
+            infrastructureDefinition:
+              identifier: dev_k8s_infra
+              inputs:
+                identifier: dev_k8s_infra
+                type: KubernetesDirect
+                spec: {}
           execution:
             steps:
               - stepGroup:
