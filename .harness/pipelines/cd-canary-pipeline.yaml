@@ -14,11 +14,6 @@ pipeline:
           deploymentType: Kubernetes
           service:
             serviceRef: Test_harness_deploy
-          artifacts:
-            primary:
-              sources:
-                - identifier: Test_artifact
-                  type: DockerRegistry
           environment:
             environmentRef: dev
             deployToAll: false
