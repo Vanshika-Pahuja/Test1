@@ -114,7 +114,7 @@ spec:
         - name: DELEGATE_DESCRIPTION
           value: ""
         - name: DELEGATE_TAGS
-          value: ""
+          value: "k8s-delegate"
         - name: NEXT_GEN
           value: "true"
         - name: CLIENT_TOOLS_DOWNLOAD_DISABLED
