@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: harness-node-demo-canary
+  name: harness-node-demo
   namespace: harness-node-demo
   labels:
     app: harness-node-demo
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: harness-node-demo
