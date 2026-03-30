@@ -17,15 +17,12 @@ spec:
     spec:
       containers:
         - name: harness-node-demo
-          image: <+artifact.image>
+          image: nginx:latest
           imagePullPolicy: Always
           ports:
             - name: http
-              containerPort: 3000
+              containerPort: 80
               protocol: TCP
-          env:
-            - name: PORT
-              value: "3000"
           resources:
             requests:
               memory: "128Mi"
@@ -36,12 +33,12 @@ spec:
           readinessProbe:
             httpGet:
               path: /
-              port: 3000
+              port: 80
             initialDelaySeconds: 10
             periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /
-              port: 3000
+              port: 80
             initialDelaySeconds: 30
             periodSeconds: 20
