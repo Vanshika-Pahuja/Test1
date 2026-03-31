@@ -28,7 +28,7 @@ service:
             - spec:
                 connectorRef: connector_2
                 imagePath: trial3wrx99-docker-local/myrepo
-                tag: latest
+                tag: <+input>
                 digest: ""
               identifier: Test_artifact
               type: DockerRegistry
