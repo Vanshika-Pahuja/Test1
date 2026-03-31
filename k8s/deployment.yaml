@@ -15,6 +15,8 @@ spec:
       labels:
         app: harness-node-demo
     spec:
+      imagePullSecrets:
+        - name: artifactory-secret
       containers:
         - name: harness-node-demo
           image: <+artifact.image>
