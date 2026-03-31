@@ -25,11 +25,6 @@ pipeline:
                           type: DockerRegistry
                           spec:
                             tag: <+input>
-          artifacts:
-            primary:
-              sources:
-                - identifier: Test_artifact
-                  type: DockerRegistry
           environment:
             environmentRef: dev
             deployToAll: false
