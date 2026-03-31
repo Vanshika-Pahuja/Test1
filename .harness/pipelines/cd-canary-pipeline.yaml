@@ -5,7 +5,38 @@ pipeline:
   orgIdentifier: default
   tags:
     ai_generated: "true"
+  properties:
+    ci:
+      codebase:
+        connectorRef: vanshikapahuja
+        repoName: Test1
+        build: <+input>
   stages:
+    - stage:
+        name: Build and Push Image
+        identifier: BuildAndPushImage
+        type: CI
+        spec:
+          cloneCodebase: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: BuildAndPushDockerRegistry
+                  name: BuildAndPushDockerRegistry_1
+                  identifier: BuildAndPushDockerRegistry_1
+                  spec:
+                    connectorRef: connector_2
+                    repo: trial3wrx99.jfrog.io/trial3wrx99-docker-local/myrepo
+                    tags:
+                      - latest
+                    dockerfile: Dockerfile
+                    context: .
     - stage:
         name: Deploy to Dev
         identifier: DeployToDev
