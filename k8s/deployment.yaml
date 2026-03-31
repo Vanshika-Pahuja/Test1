@@ -19,7 +19,7 @@ spec:
         - name: artifactory-secret
       containers:
         - name: harness-node-demo
-          image: <+artifact.image>
+          image: trial3wrx99.jfrog.io/trial3wrx99-docker-local/myrepo:latest
           imagePullPolicy: Always
           ports:
             - name: http
