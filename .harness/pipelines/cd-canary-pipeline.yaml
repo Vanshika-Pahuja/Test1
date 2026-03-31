@@ -14,6 +14,17 @@ pipeline:
           deploymentType: Kubernetes
           service:
             serviceRef: Test_harness_deploy
+            serviceInputs:
+              serviceDefinition:
+                type: Kubernetes
+                spec:
+                  artifacts:
+                    primary:
+                      sources:
+                        - identifier: Test_artifact
+                          type: DockerRegistry
+                          spec:
+                            tag: <+input>
           artifacts:
             primary:
               sources:
