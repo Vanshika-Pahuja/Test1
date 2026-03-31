@@ -15,8 +15,6 @@ spec:
       labels:
         app: harness-node-demo
     spec:
-      imagePullSecrets:
-        - name: artifactory-secret
       containers:
         - name: harness-node-demo
           image: trial3wrx99.jfrog.io/trial3wrx99-docker-local/myrepo:latest
